@@ -1,0 +1,152 @@
+* {
+    margin: 0;
+    padding:0;
+    box-sizing: border-box;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.container {
+    padding: 20px 0;
+    position: relative;
+    background-image: url("./registerBG.webp");
+    color: white;
+    max-width: 425px;
+    font-size: 15px;
+    height: 100%;
+    min-height: 100vh;
+    &__boxShadow {
+        height: 100%;
+        width: 100%;
+        position: absolute;
+        top: 0;
+        background-color: black;
+        opacity: 50%;
+        z-index: 10;
+    }
+    &__header {
+        position: relative;
+        z-index: 20;
+        padding: 0 20px;
+        &--subHeader {
+            font-size: 25px;
+        }
+    }
+    &__footer {
+        position: relative;
+        z-index: 30;
+        text-align: center;
+        padding: 0 20px;
+        margin-top: 20px;
+        &--policy {
+            & > span {
+                color: blue;
+                cursor: pointer;
+            }
+        }
+        &--login {
+            & > span {
+                color: orange;
+                cursor: pointer;
+            }
+        }
+    }
+}
+.formContainer {
+    position: relative;
+    z-index: 20;
+    padding: 0 20px;
+    margin-top: 10px;
+    &__nameField {
+        display: flex;
+        justify-content: center;
+        align-items: start;
+        &--name {
+            position: relative;
+            margin-left: 10px;
+
+        }
+        &--surname {
+            position: relative;
+        }
+    }
+    &__inputField {
+        position: relative;
+        padding-top: 10px;
+        & > input {
+            margin-top: 5px;
+        }
+    }
+    &__checkPassword {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: start;
+        align-items: center;
+        padding-top: 20px;
+
+        &--checkedRules {
+            position: relative;
+            padding: 0 20px;
+            line-height: 25px;
+        }
+    }
+    &__submit {
+        background-color: #557150;
+        color: white;
+        height: 40px;
+        width: 100%;
+        border: 1px solid #557150;
+        border-radius: 5px;
+        margin-top: 30px;
+        cursor: pointer;
+        transition: all;
+        animation-duration: 200;
+        &:hover {
+            background-color: #a6dc9c;
+            scale: 1.05;
+        }
+    }
+}
+
+.required {
+    color: red;
+}
+
+input {
+    width: 100%;
+    height: 100%;
+    min-height: 40px;
+    border-radius: 5px;
+
+    padding-left: 27px;
+    padding-right: 5px;
+}
+.customInput {
+    position: relative;
+}
+.prefix {
+    height: 20px;
+    width: 20px;
+    position: absolute;
+    bottom: 10px;
+    left: 5px;
+}
+
+.subPrefix {
+    height: 20px;
+    width: 20px;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+}
+.inputError {
+    border: 1px solid red;
+}
+.textError {
+    color: red;
+}
+

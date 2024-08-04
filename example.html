@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>buoi 5</title>
+    <link rel="stylesheet" href="./example.css" />
+  </head>
+  <body>
+    <div class="container">
+      <div class="container__boxShadow"></div>
+      <!-- header  -->
+      <div class="container__header">
+        <p class="container__header--subHeader">Đăng ký</p>
+        <p class="container__header--content">
+          Vui lòng nhập thông tin để đăng ký và sử dụng dịch vụ trên nền tảng
+          Homeee
+        </p>
+      </div>
+      <!-- end header  -->
+
+      <!-- form  -->
+      <form onsubmit="handleSubmit(event)" class="formContainer">
+        <div class="formContainer__nameField">
+          <div id="surnameBlock" class="formContainer__nameField--surname">
+            <label for="surname">Họ <span class="required">*</span></label>
+            <div class="customInput">
+              <input
+                onchange="handleChange(event, 'surnameBlock','surnameError' )"
+                type="text"
+                id="surname"
+                placeholder="Nhập họ của bạn"
+              />
+              <img class="prefix" src="./icons/surname.svg" />
+            </div>
+          </div>
+          <div id="nameBlock" class="formContainer__nameField--name">
+            <label for="name">Tên <span class="required">*</span></label>
+            <div class="customInput">
+              <input
+                onchange="handleChange(event, 'nameBlock','nameError' )"
+                type="text"
+                id="name"
+                placeholder="Nhập tên của bạn"
+              />
+              <img class="prefix" src="./icons/name.svg" />
+            </div>
+          </div>
+        </div>
+
+        <div id="emailBlock" class="formContainer__inputField">
+          <label for="email">Email <span class="required">*</span></label>
+          <div class="customInput">
+            <input
+              onchange="handleChange(event, 'emailBlock','emailError' )"
+              type="text"
+              id="email"
+              placeholder="Nhập email của bạn"
+            />
+            <img class="prefix" src="./icons/email.svg" />
+          </div>
+        </div>
+
+        <div id="phoneNumberBlock" class="formContainer__inputField">
+          <label for="phoneNumber"
+            >Số điện thoại <span class="required">*</span></label
+          >
+          <div class="customInput">
+            <input
+              onchange="handleChange(event, 'phoneNumberBlock','phoneNumberError' )"
+              type="number"
+              id="phoneNumber"
+              placeholder="Nhập số điện thoại của bạn"
+            />
+            <img class="prefix" src="./icons/phone.svg" />
+          </div>
+        </div>
+
+        <div id="passwordBlock" class="formContainer__inputField">
+          <label for="password">Mật khẩu <span class="required">*</span></label>
+          <div class="customInput">
+            <input
+              onchange="handleChange(event, 'passwordBlock','passwordError' )"
+              type="password"
+              id="password"
+              placeholder="Nhập mật khẩu"
+            />
+            <img class="prefix" src="./icons/password.svg" />
+          </div>
+        </div>
+
+        <div class="formContainer__checkPassword">
+          <div class="formContainer__checkPassword--checkedRules">
+            <img class="subPrefix" id="least8Img" src="./icons/blackTIck.svg" />
+            <p id="least8">Mật khẩu chứa ít nhất 8 ký tự</p>
+          </div>
+
+          <div class="formContainer__checkPassword--checkedRules">
+            <img
+              class="subPrefix"
+              id="includeNumberImg"
+              src="./icons/blackTIck.svg"
+            />
+            <p id="includeNumber">Bao gồm ký tự số</p>
+          </div>
+
+          <div class="formContainer__checkPassword--checkedRules">
+            <img
+              class="subPrefix"
+              id="includeUpperImg"
+              src="./icons/blackTIck.svg"
+            />
+            <p id="includeUpper">Bao gồm ký tự viết hoa và viết thường</p>
+          </div>
+
+          <div class="formContainer__checkPassword--checkedRules">
+            <img
+              class="subPrefix"
+              id="includeSpecialImg"
+              src="./icons/blackTIck.svg"
+            />
+            <p id="includeSpecial">Bao gồm ký tự đặc biệt</p>
+          </div>
+        </div>
+
+        <div id="rePasswordBlock" class="formContainer__inputField">
+          <label for="rePassword"
+            >Nhập lại mật khẩu <span class="required">*</span></label
+          >
+          <div class="customInput">
+            <input
+              onchange="handleChange(event, 'rePasswordBlock','rePasswordError' )"
+              type="password"
+              id="rePassword"
+              placeholder="Nhập lại mật khẩu"
+            />
+            <img class="prefix" src="./icons/password.svg" />
+          </div>
+        </div>
+
+        <button class="formContainer__submit" type="submit">Đăng ký</button>
+      </form>
+
+      <div class="container__footer">
+        <p class="container__footer--policy">
+          Bằng việc đăng ký, bạn đã đồng ý với Homeee về
+          <span> điều khoản dịch vụ </span> & <span>chính sách bảo mật</span>
+        </p>
+        <p class="container__footer--login">
+          Bạn đã có tài khoản? <span>Đăng nhập</span>
+        </p>
+      </div>
+      <!-- end form  -->
+    </div>
+  </body>
+
+  <script>
+    function handleChange(event, parentId, errorId) {
+      const parentBlockElement = document.getElementById(parentId); // cha
+      if (event.target.value.trim() !== "") {
+        const error = document.getElementById(errorId); // con
+        if (error) parentBlockElement.removeChild(error);
+      } else {
+        const errorText = document.createElement("p");
+        errorText.innerHTML = "Trường thông tin bắt buộc!";
+        errorText.classList.add("textError");
+        errorText.setAttribute("id", errorId);
+        parentBlockElement.appendChild(errorText);
+      }
+    }
+
+    function handleSubmit(event) {
+      event.preventDefault();
+
+      // Khai báo input field và parent field
+      const surnameBlock = document.getElementById("surnameBlock");
+      const surname = document.getElementById("surname");
+      const surnameError = document.getElementById("surnameError");
+
+      const nameBlock = document.getElementById("nameBlock");
+      const name = document.getElementById("name");
+      const nameError = document.getElementById("nameError");
+
+      const emailBlock = document.getElementById("emailBlock");
+      const email = document.getElementById("email");
+      const emailError = document.getElementById("emailError");
+
+      const phoneNumberBlock = document.getElementById("phoneNumberBlock");
+      const phoneNumber = document.getElementById("phoneNumber");
+      const phoneNumberError = document.getElementById("phoneNumberError");
+
+      const passwordBlock = document.getElementById("passwordBlock");
+      const password = document.getElementById("password");
+      const passwordError = document.getElementById("passwordError");
+
+      const rePasswordBlock = document.getElementById("rePasswordBlock");
+      const rePassword = document.getElementById("rePassword");
+
+      let isError = false;
+
+      // check required
+      if (surname.value.trim() === "") {
+        const errorText = document.createElement("p");
+        errorText.innerHTML = "Trường thông tin bắt buộc!";
+        errorText.classList.add("textError");
+        errorText.setAttribute("id", "surnameError");
+        if (!document.getElementById("surnameError"))
+          surnameBlock.appendChild(errorText);
+
+        isError = true;
+      }
+      if (name.value.trim() === "") {
+        const errorText = document.createElement("p");
+        errorText.innerHTML = "Trường thông tin bắt buộc!";
+        errorText.classList.add("textError");
+        errorText.setAttribute("id", "nameError");
+        if (!document.getElementById("nameError"))
+          nameBlock.appendChild(errorText);
+        isError = true;
+      }
+      if (email.value.trim() === "") {
+        const errorText = document.createElement("p");
+        errorText.innerHTML = "Trường thông tin bắt buộc!";
+        errorText.classList.add("textError");
+        errorText.setAttribute("id", "emailError");
+        if (!document.getElementById("emailError"))
+          emailBlock.appendChild(errorText);
+        isError = true;
+      }
+      if (phoneNumber.value.trim() === "") {
+        const errorText = document.createElement("p");
+        errorText.innerHTML = "Trường thông tin bắt buộc!";
+        errorText.classList.add("textError");
+        errorText.setAttribute("id", "phoneNumberError");
+        if (!document.getElementById("phoneNumberError"))
+          phoneNumberBlock.appendChild(errorText);
+        isError = true;
+      }
+      if (password.value.trim() === "") {
+        const errorText = document.createElement("p");
+        errorText.innerHTML = "Trường thông tin bắt buộc!";
+        errorText.classList.add("textError");
+        errorText.setAttribute("id", "passwordError");
+        if (!document.getElementById("passwordError"))
+          passwordBlock.appendChild(errorText);
+        isError = true;
+      }
+
+      // check special rules
+      if (phoneNumber.value.trim().length !== 10) {
+        const errorText = document.createElement("p");
+        errorText.innerHTML = "Số điện thoại phải có 10 chữ số!";
+        errorText.classList.add("textError");
+        errorText.setAttribute("id", "phoneNumberError");
+        if (!document.getElementById("phoneNumberError"))
+          phoneNumberBlock.appendChild(errorText);
+        isError = true;
+      }
+
+      if (password.value.trim() !== rePassword.value.trim()) {
+        const errorText = document.createElement("p");
+        errorText.innerHTML = "Nhập lại mật khẩu không đúng!";
+        errorText.classList.add("textError");
+        errorText.setAttribute("id", "rePasswordError");
+        if (!document.getElementById("rePasswordError"))
+          rePasswordBlock.appendChild(errorText);
+        isError = true;
+      }
+    }
+
+    const passwordElement = document.getElementById("password");
+
+    const least8Img = document.getElementById("least8Img");
+    const includeNumberImg = document.getElementById("includeNumberImg");
+    const includeUpperImg = document.getElementById("includeUpperImg");
+    const includeSpecialImg = document.getElementById("includeSpecialImg");
+
+    passwordElement.addEventListener("input", function (event) {
+      const hasLengthAtLeast8 = event.target.value.length >= 8;
+      if (hasLengthAtLeast8) {
+        least8Img.src = "./icons/greenTick.svg";
+      } else {
+        least8Img.src = "./icons/blackTIck.svg";
+      }
+      // check số
+      const hasNumber = /\d/.test(event.target.value);
+      if (hasNumber) {
+        includeNumberImg.src = "./icons/greenTick.svg";
+      } else {
+        includeNumberImg.src = "./icons/blackTIck.svg";
+      }
+
+      // check chữ
+      //   const hasLowerCase = /[a-z]/.test(event.target.value);
+      const hasUpperCase = /[A-Z]/.test(event.target.value);
+
+      if (hasUpperCase) {
+        includeUpperImg.src = "./icons/greenTick.svg";
+      } else {
+        includeUpperImg.src = "./icons/blackTIck.svg";
+      }
+      // check ký tự đặc biệt
+      console.log("event.target.value", event.target.value);
+
+      const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(event.target.value);
+
+      if (hasSpecialChar) {
+        includeSpecialImg.src = "./icons/greenTick.svg";
+      } else includeSpecialImg.src = "./icons/blackTIck.svg";
+    });
+  </script>
+</html>
