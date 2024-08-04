@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title></title>
+    <style></style>
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+
+  <body>
+    <div>
+      <form
+        onsubmit="handleSubmit(event)"
+        id="registerForm"
+        style="display: flex; flex-direction: column"
+      >
+        <div class="formdetail">
+          <h2>Đăng kí</h2>
+          <h5>
+            Vui lòng nhập thông tin để đăng ký và sử dụng dịch vụ trên nền tảng
+            Homeee
+          </h5>
+
+          <div class="inputfullname">
+            <div id="sureNameBlock">
+              <label for="surname">Họ <span style="color: red">*</span></label>
+              <input
+                onchange="handleChange(event, 'sureNameBlock', 'surnameError')"
+                id="surname"
+                type="text"
+                placeholder="Nhập họ của bạn"
+              />
+              <img class="icon" src="./user-svgrepo-com.svg" />
+            </div>
+            <div id="nameBlock">
+              <label for="name">Tên</label>
+              <input
+                onchange="handleChange(event, 'nameBlock', 'nameError')"
+                id="name"
+                type="text"
+                placeholder="Nhập tên của bạn"
+              />
+              <img class="icon" src="./add-user-2-svgrepo-com.svg" />
+            </div>
+          </div>
+
+          <div class="inputremain-Icon" id="emailBlock">
+            <label for="email">Email</label>
+            <input id="email" type="text" placeholder="Nhập email của bạn" />
+            <img class="icon" src="./email-open-svgrepo-com.svg" />
+          </div>
+
+          <div class="inputremain-Icon" id="phoneNumberBlock">
+            <label for="phone">Số điện thoại</label>
+            <input id="phone" type="number" placeholder="Nhập số điện thoại" />
+            <!-- <img class="icon" src="./phone-call-svgrepo-com.svg" /> -->
+          </div>
+
+          <div class="inputremain-Icon" id="passwordBlock">
+            <img class="icon" src="./key-svgrepo-com.svg" />
+            <label for="password">Mật khẩu</label>
+            <input id="password" type="password" placeholder="Nhập mật khẩu" />
+            <!-- <img class="iconeye eye_open" src="./eye-svgrepo-com.svg" />
+            <img class="iconeye eye_close" src="./eye-off-svgrepo-com.svg" /> -->
+          </div>
+
+          <div class="conditionemail">
+            <img src="./tick-svgrepo-com.svg" />
+            <span id="chieudaimk">Mật khẩu chứa ít nhất 8 ký tự</span>
+            <img src="./tick-svgrepo-com.svg" />
+            <span id="kytuso">Bao gồm ký tự số</span>
+          </div>
+          <div class="conditionemail">
+            <img src="./tick-svgrepo-com.svg" />
+            <span id="kytuchu">Bao gồm ký tự viết hoa và viết thường </span>
+            <img src="./tick-svgrepo-com.svg" />
+            <span id="kytudacbiet">Bao gồm ký tự đặc biệt</span>
+          </div>
+
+          <div class="inputremain-Icon" id="confirmPasswordBlock">
+            <img class="icon" src="./key-svgrepo-com.svg" />
+            <label for="confirmPassword">Nhập lại mật khẩu</label>
+            <input
+              id="confirmPassword"
+              type="password"
+              placeholder="Nhập mật khẩu"
+            />
+            <img class="iconeye eye_open" src="./eye-svgrepo-com.svg" />
+            <img class="iconeye eye_close" src="./eye-off-svgrepo-com.svg" />
+          </div>
+
+          <button class="buttonsubmit" type="submit">ĐĂNG KÍ</button>
+          <div id="policy">
+            <p>
+              Bằng việc đăng ký, bạn đã đồng ý với Homeee về
+              <span>điều khoản dịch vụ </span>&<span>chính sách bảo mật</span>
+            </p>
+          </div>
+          <div id="login">
+            <p>Bạn đã có tài khoản ? <span>Đăng nhập</span></p>
+          </div>
+        </div>
+      </form>
+    </div>
+  </body>
+
+  <!-- demo cách dùng const - let
+ tạo hàm onChange event => validate khi đang nhập (thêm hoặc xóa lỗi)
+
+ -->
+
+  <script>
+    function handleChange(event, parentId, childId) {
+      const parentBlockElement = document.getElementById(parentId); // cha
+      if (event.target.value.trim() !== "") {
+        const childError = document.getElementById(childId); // con
+        parentBlockElement.removeChild(childError);
+      } else {
+        const surnameErrorCreate = document.createElement("p");
+        surnameErrorCreate.innerHTML = "Vui lòng nhập họ ";
+        surnameErrorCreate.style.color = "red";
+        surnameErrorCreate.setAttribute("id", childId);
+        parentBlockElement.appendChild(surnameErrorCreate);
+      }
+    }
+
+    function handleSubmit(event) {
+      event.preventDefault();
+
+      // muốn kiểm tra toàn bộ field đã được nhập và nhập đúng hay chưa
+      // => mình cần có 1 cái cờ flat để kiểm tra
+      // => 1 hoặc nhiều biến true false
+      // đúng
+
+      // khai báo biến
+
+      let isSuccess = true; //=> có thể thay đổi giá trị
+
+      const surnameElement = document.getElementById("surname");
+      const nameElement = document.getElementById("name");
+      const emailElement = document.getElementById("email");
+      const phoneNumberElement = document.getElementById("phone");
+
+      // surnameElement.value là một string
+      // => gọi trim() => loại bỏ những kí tự khoẳng trắng ở 2 đầu của text
+      // '   bac b v   ' => trim() =>  'bac b v'
+      // console.log("surnameElement.value.trim()", surnameElement.value.trim());
+
+      // surnameElement.value.length là trả số lượng ký tự của chuỗi
+
+      // 'hoa' => .length => 3
+      // '' => lenght = 0
+      // 'absd' => length = ...
+      // ----------------------
+      // không nhập họ
+      // giá trị của thẻ input => string => text => chứ chữ số kí tự đặc biệt và được thẻ hiện trong "   a!23" hoặc là 'bv4123'
+      if (surnameElement.value.trim().length === 0) {
+        const surnameBlockElement = document.getElementById("sureNameBlock");
+        const surnameError = document.createElement("p");
+        surnameError.innerHTML = "Vui lòng nhập họ ";
+        surnameError.style.color = "red";
+        surnameError.setAttribute("id", "surnameError");
+        surnameBlockElement.appendChild(surnameError);
+        // console.log(sureNameBlock.value.length);
+        isSuccess = false;
+      } else {
+        isSuccess = true;
+      }
+
+      // không nhập tên
+
+      if (nameElement.value.trim() === "") {
+        const nameBlockElement = document.getElementById("nameBlock");
+        const newNameElement = document.createElement("p");
+        newNameElement.innerHTML = "Vui lòng nhập tên";
+        newNameElement.style.color = "red";
+        newNameElement.setAttribute("id", "nameError");
+        nameBlockElement.appendChild(newNameElement);
+        isSuccess = false;
+      } else {
+        isSuccess = true;
+      }
+
+      // không nhập email
+
+      if (emailElement.value.trim() === "") {
+        const emailBlockElement = document.getElementById("emailBlock");
+        const newEmailElement = document.createElement("p");
+        newEmailElement.innerHTML = "Vui lòng nhập email";
+        newEmailElement.style.color = "red";
+        emailBlockElement.appendChild(newEmailElement);
+        isSuccess = false;
+      } else {
+        isSuccess = true;
+      }
+      // Check confirm password với password
+
+      const ConfirmPasswordElement = document.getElementById("confirmPassword");
+      const passwordElement = document.getElementById("password");
+      if (ConfirmPasswordElement.value !== passwordElement.value) {
+        const confirmPasswordBlockElement = document.getElementById(
+          "confirmPasswordBlock"
+        );
+        const newPasswordElement = document.createElement("p");
+        newPasswordElement.innerHTML = "Vui lòng nhập lại mật khẩu";
+        newPasswordElement.style.color = "red";
+        confirmPasswordBlockElement.appendChild(newPasswordElement);
+        console.log("Comfirm mật khẩu ");
+        isSuccess = false;
+      } else {
+        isSuccess = true;
+      }
+
+      //10 số điện thoại
+
+      if (phoneNumberElement.value.trim() === "") {
+        const phoneNumberBlockElement =
+          document.getElementById("phoneNumberBlock");
+        const newElement = document.createElement("p");
+        newElement.innerHTML = "Vui lòng nhập số điện thoại";
+        newElement.style.color = "red";
+        phoneNumberBlockElement.appendChild(newElement);
+        isSuccess = false;
+
+        console.log(phoneNumberElement.value.length);
+      } else if (phoneNumberElement.value.length !== 10) {
+        const phoneNumberBlockElement =
+          document.getElementById("phoneNumberBlock");
+        const newElement = document.createElement("p");
+        newElement.innerHTML = "số điện thoại phải có 10 chữ số!";
+        newElement.style.color = "red";
+        phoneNumberBlockElement.appendChild(newElement);
+        isSuccess = false;
+
+        console.log(phoneNumberElement.value.length);
+      } else {
+        isSuccess = true;
+      }
+
+      // check least 8
+
+      if (isSuccess) {
+        alert("submit form");
+      }
+    }
+
+    const passwordElement = document.getElementById("password");
+
+    const checkLengthPassword = document.getElementById("chieudaimk");
+    passwordElement.addEventListener("input", function () {
+      console.log("Chieu dai cua mk");
+
+      const passwordInput = this.value;
+      const hasLengthAtLeast8 = passwordInput.length >= 8;
+      if (hasLengthAtLeast8) {
+        checkLengthPassword.style.color = "green";
+      } else {
+        checkLengthPassword.style.color = "white";
+      }
+    });
+    // check số
+    const checkNumber = document.getElementById("kytuso");
+
+    passwordElement.addEventListener("input", function () {
+      console.log("Phần kiểm tra số");
+      const passwordInputNumber = this.value;
+      const hasNumber = /\d/.test(passwordInputNumber);
+
+      if (hasNumber) {
+        checkNumber.style.color = "green";
+        console.log("Số màu xanh nha");
+      } else {
+        checkNumber.style.color = "white";
+      }
+    });
+
+    // check chữ
+    const checkLetter = document.getElementById("kytuchu");
+
+    passwordElement.addEventListener("input", function () {
+      console.log("Phần kiểm tra chữ");
+
+      const passwordInputLetter = this.value;
+      const hasLowerCase = /[a-z]/.test(passwordInputLetter);
+      const hasUpperCase = /[A-Z]/.test(passwordInputLetter);
+
+      if (hasLowerCase || hasUpperCase) {
+        checkLetter.style.color = "green";
+        console.log("Chữ màu xanh nha");
+      } else {
+        checkLetter.style.color = "white";
+      }
+    });
+
+    // check ký tự đặc biệt
+
+    const checkSpecialChar = document.getElementById("kytudacbiet");
+    passwordElement.addEventListener("input", function () {
+      console.log("Kiểm tra ký tự đặc biệt");
+
+      const passwordInputSpecialChar = this.value;
+      const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(
+        passwordInputSpecialChar
+      );
+
+      if (hasSpecialChar) checkSpecialChar.style.color = "green";
+      else checkSpecialChar.style.color = "white";
+    });
+  </script>
+</html>
+
+<!-- 
+
+
+
+
+về mặc logic tạo element + css => ok nice !
+
+* code JS => thực hiện tuần tự từ trên xuống
+
+
+bài tập buổi 5 
+ - thu nhỏ khoảng cách giữa các element giảm 1/2
+ - button phải có pointer cursor: pointer;
+ - chưa thể hiện trên ui là field required ( thiếu * đỏ) - cần support 
+ - lỗi icon password
+ - fix lỗi chiều cao của page
+ - tạo file tick svg => màu trắng
+ - khi chưa nhập mật khẩu => tick màu trắng
+ - khi đã nhập + check đúng đk => text xanh + tick xanh
+	dùng replace element
+    function replaceElement(oldId, newTagName, newContent) {
+      const oldElement = document.getElementById(oldId);
+      const newElement = document.createElement(newTagName);
+      newElement.innerHTML = newContent;
+      if (oldElement) {
+        document.body.replaceChild(newElement, oldElement);
+        console.log(
+          `Replaced element with id "${oldId}" with new ${newTagName} element:`,
+          newElement.innerHTML
+        );
+      } else {
+        console.log(`Element with id "${oldId}" not found`);
+      }
+    }
+
+
+submit form 
+ - tất cả các field chưa được thông báo lỗi khi để form trống
+ => phải hiện trường thông tin bắc buộc
+
+ - Số điện thoại chưa nhập => nhưng lại check số kị tự
+  => khi chưa nhập => vui lòng nhập số điện thoại
+  => khi nhập số ĐT khác 10 sô => số điện thoại phải có 10 chữ số
+
+ -
+
+
+ -->
