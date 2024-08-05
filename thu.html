@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>HTML DOM Document Object Examples with Functions and Buttons</title>
+    <style></style>
+  </head>
+  <body>
+    <div>
+      <form
+        onsubmit="handleSubmit(event)"
+        id="registerForm"
+        style="display: flex; flex-direction: column"
+      >
+        <div>
+          <label for="email">email</label>
+          <input id="email" type="text" />
+        </div>
+        <div id="phoneNumberBlock">
+          <label for="phoneNumber">phone number</label>
+          <input id="phoneNumber" type="number" />
+        </div>
+        <div>
+          <label for="name">name</label>
+          <input id="name" type="text" />
+        </div>
+
+      
+
+        <button type="submit">submit</button>
+      </form>
+    </div>
+  </body>
+  <script>
+    ///////// buổi 4////////////
+    // tạo một hàm chặn gửi giá trị của form đi
+    // giữ lại để kiểm tra có thõa điều kiện hay không
+
+    function handleSubmit(event) {
+      event.preventDefault();
+      const emailElement = document.getElementById("email");
+      const nameElement = document.getElementById("name");
+      const phoneNumberElement = document.getElementById("phoneNumber");
+
+      // if (emailElement) {
+      //   console.log(emailElement.value);
+      //   return;
+      // }
+
+      // if (nameElement) {
+      //   console.log(nameElement.value);
+      //   return;
+      // }
+      // 0 == "0" => đúng
+      // 0 === "0" => sai
+      if (phoneNumberElement.value.length !== 10) {
+        // chuỗi kí tự => sẽ có cái property .length
+        const phoneNumberBlockElement =
+          document.getElementById("phoneNumberBlock");
+        const newElement = document.createElement("p");
+        newElement.innerHTML = "số điện thoại phải có 10 chữ số!";
+        newElement.style.color = "red";
+        newElement.style.position = "absolute"; // Đặt vị trí tuyệt đối
+        newElement.style.top = "50%"; // Căn giữa theo chiều dọc
+      
+        phoneNumberBlockElement.appendChild(newElement);
+        console.log(phoneNumberElement.value.length);
+        return;
+      }
+
+      alert(
+        `${emailElement.value} - ${nameElement.value} - ${phoneNumberElement.value}`
+      );
+    }
+
+    ///////////////////////////////////////////////
+    // Function to find an element by id and log its content
+    function findElementById(id) {
+      // window.addEventListener()
+      const element = document.getElementById(id); // kq element là một phần tử
+      console.log(
+        `Element with id "${id}":`,
+        element ? element.textContent : "Not found"
+      );
+    }
+
+    // Function to find elements by class name and log the content of the first one
+    function findElementsByClassName(className) {
+      const elements = document.getElementsByClassName(className); // kq trả về là một mảng nhiều phần tử
+      console.log(
+        `First element with class "${className}":`,
+        elements.length ? elements[0].textContent : "Not found"
+      );
+    }
+
+    // Function to find elements by tag name and log the content of the first one
+    function findElementsByTagName(tagName) {
+      const elements = document.getElementsByTagName(tagName);
+      console.log(
+        `First element with tag "${tagName}":`,
+        elements.length ? elements[0].textContent : "Not found"
+      );
+    }
+
+    // Function to change the inner HTML of an element
+    function changeInnerHTML(id, newContent) {
+      const element = document.getElementById(id);
+      if (element) {
+        element.innerHTML = newContent;
+        console.log(
+          `Changed innerHTML of element with id "${id}":`,
+          element.innerHTML
+        );
+      } else {
+        console.log(`Element with id "${id}" not found`);
+      }
+    }
+
+    // Function to change the style of an element
+    function changeStyle(id, property, value) {
+      const element = document.getElementById("para1");
+      const notice = document.getElementById("notice");
+      if (element || notice) {
+        element.classList.add("highlight");
+        // element.classList.remove("highlight");
+        notice.style.display = "block";
+        console.log(
+          `Changed style "${property}" of element with id "${id}":`,
+          element.style[property]
+        );
+      } else {
+        console.log(`Element with id "${id}" not found`);
+      }
+    }
+
+    function changeStyle1(id, property, value) {
+      const element = document.getElementById("para1");
+      if (element) {
+        // element.classList.add("highlight");
+        element.classList.remove("highlight");
+
+        console.log(
+          `Changed style "${property}" of element with id "${id}":`,
+          element.style[property]
+        );
+      } else {
+        console.log(`Element with id "${id}" not found`);
+      }
+    }
+
+    // Function to change the attribute value of an element
+    function changeAttribute(id, attribute, value) {
+      const element = document.getElementById(id);
+      if (element) {
+        element.setAttribute(attribute, value);
+        console.log(
+          `Changed attribute "${attribute}" of element with id "${id}":`,
+          element.getAttribute(attribute)
+        );
+      } else {
+        console.log(`Element with id "${id}" not found`);
+      }
+    }
+
+    // Function to create a new element and append it to the body
+    function createElementAndAppend() {
+      const newElement = document.createElement("p"); // tạo ra một element dạng là 1 thẻ p
+      newElement.innerHTML = "invalid form"; // truyền vào một nội dung bất kì
+      newElement.classList.add("highlight");
+      newElement.setAttribute("id", "newNotice");
+      // document.body.appendChild(newElement);
+      const noticeElement = document.getElementById("notice");
+      noticeElement.appendChild(newElement);
+
+      console.log(`Appended new ${tagName} element:`, newElement.innerHTML);
+    }
+
+    // Function to remove an element by id
+    function removeElementById(id) {
+      const element = document.getElementById("newNotice");
+      // console.log("attribute", element.getAttributeNames());
+      if (element) {
+        const noticeElement = document.getElementById("notice");
+        noticeElement.removeChild(element);
+        console.log(`Removed element with id "${id}"`);
+      } else {
+        console.log(`Element with id "${id}" not found`);
+      }
+    }
+
+    // Function to replace an old element with a new one
+    function replaceElement(oldId, newTagName, newContent) {
+      const oldElement = document.getElementById(oldId);
+      const newElement = document.createElement(newTagName);
+      newElement.innerHTML = newContent;
+      if (oldElement) {
+        document.body.replaceChild(newElement, oldElement);
+        console.log(
+          `Replaced element with id "${oldId}" with new ${newTagName} element:`,
+          newElement.innerHTML
+        );
+      } else {
+        console.log(`Element with id "${oldId}" not found`);
+      }
+    }
+  </script>
+</html>
